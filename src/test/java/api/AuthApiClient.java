@@ -38,7 +38,7 @@ public class AuthApiClient {
                 .extract().as(WrongCredentialsResponseModel.class);
     }
 
-    @Step("Авторизация с незаполненным полем username")
+    @Step("Попытка авторизации с незаполненным полем username")
     public FieldRequiredResponseModel emptyUsernameFieldAuthorization(LoginBodyModel loginData) {
         return given(requestSpec)
                 .body(loginData)
@@ -50,7 +50,7 @@ public class AuthApiClient {
                 .as(FieldRequiredResponseModel.class);
     }
 
-    @Step("Выход из аккаунта")
+    @Step("POST-запрос на выход из аккаунта")
     public Response userLogout(LogoutBodyModel logoutData) {
         return given(requestSpec)
                 .body(logoutData)
@@ -62,7 +62,7 @@ public class AuthApiClient {
                 .response();
     }
 
-    @Step("Выполнение запроса на выход с нулевым refresh-токеном")
+    @Step("Отправка POST-запроса на выход с нулевым refresh-токеном")
     public FieldNullResponseModel refreshNullLogout(LogoutBodyModel logoutData) {
         return given(requestSpec)
                 .body(logoutData)
@@ -74,7 +74,7 @@ public class AuthApiClient {
                 .as(FieldNullResponseModel.class);
     }
 
-    @Step("Выполнение запроса на выход с невалидным refresh-токеном")
+    @Step("Отправка POST-запроса на выход с невалидным refresh-токеном")
     public UnauthorizedResponseModel refreshInvalidLogout(LogoutBodyModel logoutData) {
         return given(requestSpec)
                 .body(logoutData)

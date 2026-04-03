@@ -1,3 +1,4 @@
 package models.update;
 
-public record UpdateEmailBodyModel(String email) {}
+public record UpdateEmailBodyModel(String email) {
+}

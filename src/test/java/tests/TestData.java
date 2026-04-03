@@ -11,7 +11,12 @@ public class TestData {
             longUsername = faker.lorem().characters(151),
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
-            email = faker.internet().emailAddress();
+            email = faker.internet().emailAddress(),
+            bookTitle = faker.book().title(),
+            bookAuthors = faker.book().author(),
+            description = faker.lorem().paragraph();
+
+    public Integer publicationYear = faker.number().numberBetween(1200, 2026);
 
     public static final String REFRESH_NULL = null;
 
@@ -45,4 +50,8 @@ public class TestData {
                     + "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$";
 
     public static final String LOGIN_TOKEN_PREFIX = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9";
+
+    public static final String TELEGRAM_CHAT_LINK = "https://t.me/my_telegram_chat";
+
+    public static final String NEW_TELEGRAM_CHAT_LINK = "https://t.me/my_new_telegram_chat";
 }

@@ -15,6 +15,10 @@ public class BaseSpec {
             .log().all()
             .contentType(JSON);
 
+    public static RequestSpecification requestRemoveSpec = with()
+            .filter(withCustomTemplate())
+            .log().all();
+
     public static ResponseSpecification baseResponseSpec = new ResponseSpecBuilder()
             .log(ALL)
             .build();

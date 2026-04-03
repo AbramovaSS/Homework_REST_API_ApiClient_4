@@ -30,7 +30,6 @@ public class UserApiClient {
     }
 
     @Step("Повторная регистрация пользователя")
-    // подумать над названием модели FieldRequiredResponseModel
     public FieldRequiredResponseModel existingUserRegistration(RegistrationBodyModel registrationData) {
         return given(requestSpec)
                 .body(registrationData)
