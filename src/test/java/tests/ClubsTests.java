@@ -6,6 +6,7 @@ import models.login.LoginBodyModel;
 import models.login.SuccessfulLoginResponseModel;
 import models.registration.RegistrationBodyModel;
 import models.registration.SuccessfulRegistrationResponseModel;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -102,14 +103,16 @@ public class ClubsTests extends TestBase {
         SuccessfulCreateClubResponseModel editingClubResponse = api.clubs.clubEditing(clubId, clubsNewData, access);
 
         step("Проверка данных клуба после редактирования Telegram-ссылки", () -> {
-            assertThat(editingClubResponse.id()).isNotNull();
-            assertThat(editingClubResponse.id()).isEqualTo(clubId);
-            assertThat(editingClubResponse.bookTitle()).isEqualTo(testData.bookTitle);
-            assertThat(editingClubResponse.bookAuthors()).isEqualTo(testData.bookAuthors);
-            assertThat(editingClubResponse.publicationYear()).isEqualTo(testData.publicationYear);
-            assertThat(editingClubResponse.description()).isEqualTo(testData.description);
-            assertThat(editingClubResponse.telegramChatLink()).isEqualTo(NEW_TELEGRAM_CHAT_LINK);
-            assertThat(editingClubResponse.modified()).isNotNull();
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(editingClubResponse.id()).isNotNull();
+                softAssertions.assertThat(editingClubResponse.id()).isEqualTo(clubId);
+                softAssertions.assertThat(editingClubResponse.bookTitle()).isEqualTo(testData.bookTitle);
+                softAssertions.assertThat(editingClubResponse.bookAuthors()).isEqualTo(testData.bookAuthors);
+                softAssertions.assertThat(editingClubResponse.publicationYear()).isEqualTo(testData.publicationYear);
+                softAssertions.assertThat(editingClubResponse.description()).isEqualTo(testData.description);
+                softAssertions.assertThat(editingClubResponse.telegramChatLink()).isEqualTo(NEW_TELEGRAM_CHAT_LINK);
+                softAssertions.assertThat(editingClubResponse.modified()).isNotNull();
+            });
         });
     }
 

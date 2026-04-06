@@ -6,11 +6,11 @@ import models.registration.RegistrationBodyModel;
 import models.registration.SuccessfulRegistrationResponseModel;
 import models.update.*;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
-import static org.assertj.core.api.Assertions.assertThat;
 import static tests.TestData.*;
 
 public class UpdateUserTests extends TestBase {
@@ -29,12 +29,14 @@ public class UpdateUserTests extends TestBase {
                 (testData.username, testData.firstName, testData.lastName, testData.email), access);
 
         step("Проверка корректности обновленных данных пользователя", () -> {
-            Assertions.assertThat(updateResponse.id()).isEqualTo(registrationResponse.id());
-            Assertions.assertThat(updateResponse.username()).isEqualTo(testData.username);
-            Assertions.assertThat(updateResponse.firstName()).isEqualTo(testData.firstName);
-            Assertions.assertThat(updateResponse.lastName()).isEqualTo(testData.lastName);
-            Assertions.assertThat(updateResponse.email()).isEqualTo(testData.email);
-            assertThat(updateResponse.remoteAddr()).isEqualTo(registrationResponse.remoteAddr());
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(updateResponse.id()).isEqualTo(registrationResponse.id());
+                softAssertions.assertThat(updateResponse.username()).isEqualTo(testData.username);
+                softAssertions.assertThat(updateResponse.firstName()).isEqualTo(testData.firstName);
+                softAssertions.assertThat(updateResponse.lastName()).isEqualTo(testData.lastName);
+                softAssertions.assertThat(updateResponse.email()).isEqualTo(testData.email);
+                softAssertions.assertThat(updateResponse.remoteAddr()).isEqualTo(registrationResponse.remoteAddr());
+            });
         });
     }
 
@@ -51,12 +53,15 @@ public class UpdateUserTests extends TestBase {
                 (new UpdateEmailBodyModel(testData.email), access);
 
         step("Проверка корректности обновленных данных, включая email", () -> {
-            Assertions.assertThat(updateResponse.id()).isEqualTo(registrationResponse.id());
-            Assertions.assertThat(updateResponse.username()).isEqualTo(testData.username);
-            Assertions.assertThat(updateResponse.firstName()).isEqualTo("");
-            Assertions.assertThat(updateResponse.lastName()).isEqualTo("");
-            Assertions.assertThat(updateResponse.email()).isEqualTo(testData.email);
-            assertThat(updateResponse.remoteAddr()).isEqualTo(registrationResponse.remoteAddr());
+
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(updateResponse.id()).isEqualTo(registrationResponse.id());
+                softAssertions.assertThat(updateResponse.username()).isEqualTo(testData.username);
+                softAssertions.assertThat(updateResponse.firstName()).isEqualTo("");
+                softAssertions.assertThat(updateResponse.lastName()).isEqualTo("");
+                softAssertions.assertThat(updateResponse.email()).isEqualTo(testData.email);
+                softAssertions.assertThat(updateResponse.remoteAddr()).isEqualTo(registrationResponse.remoteAddr());
+            });
         });
     }
 

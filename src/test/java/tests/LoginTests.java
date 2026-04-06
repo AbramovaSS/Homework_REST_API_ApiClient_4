@@ -5,6 +5,7 @@ import models.login.FieldRequiredResponseModel;
 import models.login.SuccessfulLoginResponseModel;
 import models.login.WrongCredentialsResponseModel;
 import models.registration.RegistrationBodyModel;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,9 +29,11 @@ public class LoginTests extends TestBase {
             String actualAccess = loginResponse.access();
             String actualRefresh = loginResponse.refresh();
 
-            assertThat(actualAccess).startsWith(expectedTokenPath);
-            assertThat(actualRefresh).startsWith(expectedTokenPath);
-            assertThat(actualAccess).isNotEqualTo(actualRefresh);
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(actualAccess).startsWith(expectedTokenPath);
+                softAssertions.assertThat(actualRefresh).startsWith(expectedTokenPath);
+                softAssertions.assertThat(actualAccess).isNotEqualTo(actualRefresh);
+            });
         });
     }
 

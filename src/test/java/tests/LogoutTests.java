@@ -7,6 +7,7 @@ import models.logout.FieldNullResponseModel;
 import models.logout.LogoutBodyModel;
 import models.logout.UnauthorizedResponseModel;
 import models.registration.RegistrationBodyModel;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,8 +59,11 @@ public class LogoutTests extends TestBase {
         step("Проверка ошибки для невалидного refresh-токена", () -> {
             String actualDetailError = logoutUnauthorizedResponse.detail();
             String actualCodeError = logoutUnauthorizedResponse.code();
-            assertThat(actualDetailError).isEqualTo(TOKEN_INVALID_ERROR);
-            assertThat(actualCodeError).isEqualTo(TOKEN_NOT_VALID_ERROR);
+
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(actualDetailError).isEqualTo(TOKEN_INVALID_ERROR);
+                softAssertions.assertThat(actualCodeError).isEqualTo(TOKEN_NOT_VALID_ERROR);
+            });
         });
     }
 }

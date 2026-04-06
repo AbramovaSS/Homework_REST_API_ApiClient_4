@@ -3,6 +3,7 @@ package tests;
 import models.login.FieldRequiredResponseModel;
 import models.registration.RegistrationBodyModel;
 import models.registration.SuccessfulRegistrationResponseModel;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +21,13 @@ public class RegistrationTests extends TestBase {
                 (new RegistrationBodyModel(testData.username, testData.password));
 
         step("Проверка данных пользователя после регистрации", () -> {
-            assertThat(registrationResponse.username()).isEqualTo(testData.username);
-            assertThat(registrationResponse.firstName()).isEqualTo("");
-            assertThat(registrationResponse.lastName()).isEqualTo("");
-            assertThat(registrationResponse.email()).isEqualTo("");
-            assertThat(registrationResponse.remoteAddr()).matches(REGISTRATION_IP_REGEXP);
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(registrationResponse.username()).isEqualTo(testData.username);
+                softAssertions.assertThat(registrationResponse.firstName()).isEqualTo("");
+                softAssertions.assertThat(registrationResponse.lastName()).isEqualTo("");
+                softAssertions.assertThat(registrationResponse.email()).isEqualTo("");
+                softAssertions.assertThat(registrationResponse.remoteAddr()).matches(REGISTRATION_IP_REGEXP);
+            });
         });
     }
 
